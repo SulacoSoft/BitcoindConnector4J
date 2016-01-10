@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: "maven"
+
+version = '0.1.0'
+group = 'com.sulacosoft'
+def artifactId = 'BitcoindConnector4J'
+
+jar {
+	manifest {
+		attributes(
+			'Implementation-Title': project.name,
+			'Implementation-Version': version,
+            'Built-By': System.getProperty('user.name'),
+            'Built-Date': new Date(),
+            'Built-JDK': System.getProperty('java.version')
+		)
+	}
+}
+
+dependencies {
+    compile 'net.sf.json-lib:json-lib:2.4:jdk15'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.apache.httpcomponents:httpclient:4.5.1'
+    //compile 'com.github.User:Repo:Tag'
+}
+
+repositories {
+	mavenCentral()
+
+	maven { 
+		url "https://jitpack.io"
+		credentials { username authToken }
+	}
+}
