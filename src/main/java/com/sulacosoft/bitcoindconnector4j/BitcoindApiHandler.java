@@ -50,7 +50,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
 public class BitcoindApiHandler implements InvocationHandler {
 

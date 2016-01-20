@@ -19,7 +19,7 @@ package com.sulacosoft.bitcoindconnector4j.response;
 
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
 public class Info extends BaseResponse {
 

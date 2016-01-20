@@ -20,60 +20,65 @@ package com.sulacosoft.bitcoindconnector4j;
 import java.util.List;
 import java.util.Map;
 
-import com.sulacosoft.bitcoindconnector4j.core.BitcoindConnector4JException;
 import com.sulacosoft.bitcoindconnector4j.response.BitcoinAddress;
-import com.sulacosoft.bitcoindconnector4j.response.Transaction;
 import com.sulacosoft.bitcoindconnector4j.response.Block;
 import com.sulacosoft.bitcoindconnector4j.response.Info;
 import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAccount;
+import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAddress;
 import com.sulacosoft.bitcoindconnector4j.response.SinceBlock;
+import com.sulacosoft.bitcoindconnector4j.response.Transaction;
 import com.sulacosoft.bitcoindconnector4j.response.TransactionDetails;
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ * @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
 public interface BitcoindApi {
 
-	String getaccount(String bitcoinAddress) throws BitcoindConnector4JException;
+	String getaccount(String bitcoinAddress);
 
-	String getaccountaddress(String account) throws BitcoindConnector4JException;
+	String getaccountaddress(String account);
 
-	List<String> getaddressesbyaccount(String account) throws BitcoindConnector4JException;
+	List<String> getaddressesbyaccount(String account);
 
-	int getconnectioncount() throws BitcoindConnector4JException;
+	int getconnectioncount();
 
-	String getnewaddress(String account) throws BitcoindConnector4JException;
+	String getnewaddress(String account);
 
-	Double getbalance() throws BitcoindConnector4JException;
+	Double getbalance();
 
-	Double getbalance(String account) throws BitcoindConnector4JException;
+	Double getbalance(String account);
 
-	Double getbalance(String account, long minconf) throws BitcoindConnector4JException;
+	Double getbalance(String account, long minconf);
 
-	String getbestblockhash() throws BitcoindConnector4JException;
+	String getbestblockhash();
 
-	Block getblock(String hash) throws BitcoindConnector4JException;
+	Block getblock(String hash);
 
-	Double getdifficulty() throws BitcoindConnector4JException;
+	Double getdifficulty();
 
-	boolean getgenerate() throws BitcoindConnector4JException;
+	boolean getgenerate();
 
-	long gethashespersec() throws BitcoindConnector4JException;
+	long gethashespersec();
 
-	Info getinfo() throws BitcoindConnector4JException;
+	Info getinfo();
 
 	TransactionDetails gettransaction(String txid);
 
-	Map<String, Double> listaccounts() throws BitcoindConnector4JException;
+	Map<String, Double> listaccounts();
 
-	Map<String, Double> listaccounts(long confirms) throws BitcoindConnector4JException;
+	Map<String, Double> listaccounts(long confirms);
 
-	List<ReceivedByAccount> listreceivedbyaccount() throws BitcoindConnector4JException;
+	List<ReceivedByAccount> listreceivedbyaccount();
 
-	List<ReceivedByAccount> listreceivedbyaccount(long confirms) throws BitcoindConnector4JException;
+	List<ReceivedByAccount> listreceivedbyaccount(long confirms);
 
-	List<ReceivedByAccount> listreceivedbyaccount(long confirms, boolean includeEmpty)
-			throws BitcoindConnector4JException;
+	List<ReceivedByAccount> listreceivedbyaccount(long confirms, boolean includeEmpty);
+
+	List<ReceivedByAddress> listreceivedbyaddress();
+
+	List<ReceivedByAddress> listreceivedbyaddress(long confirms);
+
+	List<ReceivedByAddress> listreceivedbyaddress(long confirms, boolean includeEmpty);
 
 	List<Transaction> listtransactions();
 
@@ -89,9 +94,9 @@ public interface BitcoindApi {
 
 	SinceBlock listsinceblock(String blockhash, long targetConfirmations);
 
-	Double getreceivedbyaddress(String address) throws BitcoindConnector4JException;
+	Double getreceivedbyaddress(String address);
 
-	Double getreceivedbyaddress(String address, long confirms) throws BitcoindConnector4JException;
+	Double getreceivedbyaddress(String address, long confirms);
 
 	boolean move(String fromaccount, String toaccount, Double amount);
 
@@ -99,17 +104,15 @@ public interface BitcoindApi {
 
 	boolean move(String fromaccount, String toaccount, Double amount, long minconf, String comment);
 
-	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount) throws BitcoindConnector4JException;
+	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount);
 
-	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount, long minconf)
-			throws BitcoindConnector4JException;
+	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount, long minconf);
 
-	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount, long minconf, String comment)
-			throws BitcoindConnector4JException;
+	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount, long minconf, String comment);
 
 	String sendfrom(String fromaccount, String tobitcoinaddress, Double amount, long minconf, String comment,
-			String commentto) throws BitcoindConnector4JException;
+			String commentto);
 
-	BitcoinAddress validateaddress(String address) throws BitcoindConnector4JException;
+	BitcoinAddress validateaddress(String address);
 
 }
