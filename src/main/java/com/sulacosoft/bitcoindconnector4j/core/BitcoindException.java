@@ -18,19 +18,26 @@
 package com.sulacosoft.bitcoindconnector4j.core;
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
-public class BitcoindException extends BitcoindConnector4JException {
+public class BitcoindException extends Error {
 
 	private static final long serialVersionUID = 4505365298463956527L;
 
+	private int code;
+
 	public BitcoindException(String message, int code) {
-		super(message, code);
+		super(message);
+		this.code = code;
+	}
+
+	public int getCode() {
+		return code;
 	}
 
 	@Override
 	public String toString() {
-		return "BitcoindException [code=" + getCode() + ", message=" + getMessage() + "]";
+		return "BitcoindException [code=" + code + ", message=" + getMessage() + "]";
 	}
 
 }

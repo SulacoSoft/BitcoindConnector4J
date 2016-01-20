@@ -22,7 +22,7 @@ import java.lang.reflect.Proxy;
 import com.sulacosoft.bitcoindconnector4j.core.BitcoindConnector4JException;
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
 public class BitcoindApiFactory {
 

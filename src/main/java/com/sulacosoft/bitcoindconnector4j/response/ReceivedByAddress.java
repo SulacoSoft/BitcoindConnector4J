@@ -17,33 +17,64 @@
 
 package com.sulacosoft.bitcoindconnector4j.response;
 
+import java.util.Arrays;
+
 /**
  *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
-public class Error {
+public class ReceivedByAddress {
 
-	private int code;
-	private String message;
+	private String[] txids;
 
-	public int getCode() {
-		return code;
+	private String account;
+	private String address;
+	private Double amount;
+	private int confirmations;
+
+	public String[] getTxids() {
+		return txids;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setTxids(String[] txids) {
+		this.txids = txids;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public int getConfirmations() {
+		return confirmations;
+	}
+
+	public void setConfirmations(int confirmations) {
+		this.confirmations = confirmations;
 	}
 
 	@Override
 	public String toString() {
-		return "Error [code=" + code + ", message=" + message + "]";
+		return "ReceivedByAddress [txids=" + Arrays.toString(txids) + ", account=" + account + ", address=" + address
+				+ ", amount=" + amount + ", confirmations=" + confirmations + "]";
 	}
 
 }

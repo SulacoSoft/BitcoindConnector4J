@@ -18,9 +18,9 @@
 package com.sulacosoft.bitcoindconnector4j.core;
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
-public class BitcoindConnector4JException extends Exception {
+public class BitcoindConnector4JException extends Error {
 
 	private static final long serialVersionUID = 7067995066712543598L;
 	private int code;

@@ -2,12 +2,15 @@
 
 BitcoindConnector4J is a Java library to call the JSON-RPC API of the Bitcoind server.
 
-	                     +----------+      +---------------------+      +----------+
-	                     |          |      |                     |      |          |
-	Bitcoin P2P net <--> | Bitcoind | <--> | BitcoindConnector4J | <--> | Java App |
-	                     |          |      |                     |      |          |
-	                     +----------+      +---------------------+      +----------+
-
+	                                           +------------------------------------------+
+	                                           | JVM                                      |
+	                     +----------+          +---------------------+      +----------+  |
+	                     |          | JSON-RPC |                     |      |          |  |
+	Bitcoin P2P net <--> | Bitcoind | <------> | BitcoindConnector4J | <--> | Java App |  |
+	                     |          |          |                     |      |          |  |
+	                     +----------+          +---------------------+      +----------+  |
+	                                           |                                          |
+	                                           +------------------------------------------+
 
 ## Code Example
 
@@ -77,6 +80,7 @@ Currently connector implemented methods:
 * gettransaction
 * listaccounts
 * listreceivedbyaccount
+* getreceivedbyaddress
 * listtransactions
 * listsinceblock
 * getreceivedbyaddress

@@ -20,7 +20,7 @@ package com.sulacosoft.bitcoindconnector4j.response;
 import java.util.List;
 
 /**
- *  @author Sebastian Dziak <sebastian.dziak@sulacosoft.com>
+ *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
 public class TransactionDetails {
 
