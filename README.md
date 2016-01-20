@@ -81,6 +81,7 @@ Currently connector implemented methods:
 * gettransaction
 * listaccounts
 * listreceivedbyaccount
+* getreceivedbyaddress
 * listtransactions
 * listsinceblock
 * move
