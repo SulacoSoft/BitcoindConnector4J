@@ -14,6 +14,15 @@ BitcoindConnector4J is a Java library to call the JSON-RPC API of the Bitcoind s
 
 ## Code Example
 
+Import library in pom.xml:
+
+	<dependency>
+		<groupId>com.sulacosoft</groupId>
+		<artifactId>BitcoindConnector4J</artifactId>
+		<version>0.2.0</version>
+	</dependency>
+
+
 Example how to connect and call methods:
 
 	import java.util.Map;
