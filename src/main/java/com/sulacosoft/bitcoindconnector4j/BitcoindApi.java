@@ -34,6 +34,8 @@ import com.sulacosoft.bitcoindconnector4j.response.TransactionDetails;
  */
 public interface BitcoindApi {
 
+	int getblockcount();
+
 	String getaccount(String bitcoinAddress);
 
 	String getaccountaddress(String account);
