@@ -20,4 +20,5 @@ target/
 out/
 
 TmpTest*.java
-/bin/
+bin/
+build/
