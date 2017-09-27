@@ -17,13 +17,15 @@
 
 package com.sulacosoft.bitcoindconnector4j.response;
 
+import com.google.gson.JsonElement;
+
 /**
  *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
  */
 public class BaseResponse {
 
 	private long id;
-	private Object result;
+	private JsonElement result;
 	private Error error;
 
 	public long getId() {
@@ -34,11 +36,11 @@ public class BaseResponse {
 		this.id = id;
 	}
 
-	public Object getResult() {
+	public JsonElement getResult() {
 		return result;
 	}
 
-	public void setResult(Object result) {
+	public void setResult(JsonElement result) {
 		this.result = result;
 	}
 

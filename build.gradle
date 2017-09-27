@@ -19,7 +19,7 @@ jar {
 }
 
 dependencies {
-    compile 'net.sf.json-lib:json-lib:2.4:jdk15'
+    compile 'com.google.code.gson:gson:2.8.2'
     compile 'commons-io:commons-io:2.4'
     compile 'org.apache.httpcomponents:httpclient:4.5.1'
 }

@@ -19,10 +19,6 @@ package com.sulacosoft.bitcoindconnector4j;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.io.IOUtils;
@@ -42,12 +38,11 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import com.google.gson.Gson;
 import com.sulacosoft.bitcoindconnector4j.core.BitcoindException;
 import com.sulacosoft.bitcoindconnector4j.core.HttpException;
-
-import net.sf.ezmorph.bean.MorphDynaBean;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
+import com.sulacosoft.bitcoindconnector4j.response.BaseResponse;
+import com.sulacosoft.bitcoindconnector4j.response.Error;
 
 /**
  *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
@@ -89,17 +84,15 @@ public class BitcoindApiHandler implements InvocationHandler {
 		httpPost.setEntity(new ByteArrayEntity(jsonRequest.getBytes(CHARACTER_ENCODING)));
 		CloseableHttpResponse response = httpClient.execute(targetHost, httpPost, context);
 		try {
-
 			checkHttpErrors(response.getStatusLine().getStatusCode());
-
 			String jsonResponse = IOUtils.toString(response.getEntity().getContent(), CHARACTER_ENCODING);
-			JSONObject jsonObject = JSONObject.fromObject(jsonResponse);
-			MorphDynaBean baseResponse = (MorphDynaBean) JSONObject.toBean(jsonObject);
+			BaseResponse jsonObject = new Gson().fromJson(jsonResponse, BaseResponse.class);
 
-			checkBitcoindErrors((MorphDynaBean) baseResponse.get("error"));
+			Error error = jsonObject.getError();
+			if (error != null)
+				throw new BitcoindException(error.getMessage(), error.getCode());
 
-			return deserializeResult(method, baseResponse.get("result"));
-
+			return new Gson().fromJson(jsonObject.getResult(), method.getReturnType());
 		} finally {
 			response.close();
 		}
@@ -130,41 +123,6 @@ public class BitcoindApiHandler implements InvocationHandler {
 			else
 				throw new HttpException(String.format("Bitcoind JSON-RPC HTTP error. HTTP Status-Code %s", statusCode),
 						statusCode);
-		}
-	}
-
-	private void checkBitcoindErrors(MorphDynaBean jsonError) throws BitcoindException {
-		if (jsonError != null) {
-			com.sulacosoft.bitcoindconnector4j.response.Error error = (com.sulacosoft.bitcoindconnector4j.response.Error) JSONObject
-					.toBean(JSONObject.fromObject(jsonError), com.sulacosoft.bitcoindconnector4j.response.Error.class);
-			throw new BitcoindException(error.getMessage(), error.getCode());
-		}
-	}
-
-	private Object deserializeResult(Method method, Object result) {
-		if (result instanceof MorphDynaBean) {
-			return JSONObject.toBean(JSONObject.fromObject(JSONSerializer.toJSON((MorphDynaBean) result)),
-					method.getReturnType());
-		} else if (result instanceof List) {
-			List<?> incomingList = (List<?>) result;
-			if (incomingList.size() == 0)
-				return Collections.EMPTY_LIST;
-
-			ParameterizedType type = (ParameterizedType) method.getGenericReturnType(); // method.getGenericType();
-			Class<?> clazz = (Class<?>) type.getActualTypeArguments()[0];
-
-			ArrayList<Object> outcomingList = new ArrayList<>();
-			if (incomingList.get(0) instanceof MorphDynaBean) {
-				for (Object entity : incomingList) {
-					Object ent = JSONObject.toBean(JSONObject.fromObject(entity), clazz);
-					outcomingList.add(ent);
-				}
-			} else {
-				outcomingList.addAll(incomingList);
-			}
-			return outcomingList;
-		} else {
-			return result;
 		}
 	}
 
