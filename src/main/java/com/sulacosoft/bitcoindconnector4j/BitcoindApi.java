@@ -23,6 +23,7 @@ import java.util.Map;
 import com.sulacosoft.bitcoindconnector4j.response.BitcoinAddress;
 import com.sulacosoft.bitcoindconnector4j.response.Block;
 import com.sulacosoft.bitcoindconnector4j.response.Info;
+import com.sulacosoft.bitcoindconnector4j.response.RawTransaction;
 import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAccount;
 import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAddress;
 import com.sulacosoft.bitcoindconnector4j.response.SinceBlock;
@@ -64,6 +65,10 @@ public interface BitcoindApi {
 
 	Info getinfo();
 
+	String getrawtransaction(String txid);
+	
+	RawTransaction getrawtransaction(String txid, boolean verbose);
+	
 	TransactionDetails gettransaction(String txid);
 
 	Map<String, Double> listaccounts();
