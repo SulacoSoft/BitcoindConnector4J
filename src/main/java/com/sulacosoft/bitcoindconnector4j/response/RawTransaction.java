@@ -27,6 +27,7 @@ import com.sulacosoft.bitcoindconnector4j.response.RawTransaction.Vin.Vout;
  */
 public class RawTransaction {
 
+	@Fallback
 	private String hex;
 	private String txid;
 	private String hash;
