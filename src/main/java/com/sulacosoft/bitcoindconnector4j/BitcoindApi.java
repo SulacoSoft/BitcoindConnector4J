@@ -65,6 +65,8 @@ public interface BitcoindApi {
 
 	Info getinfo();
 
+	String sendrawtransaction(String txhex);
+
 	String getrawtransaction(String txid);
 	
 	RawTransaction getrawtransaction(String txid, boolean verbose);
