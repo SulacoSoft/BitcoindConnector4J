@@ -17,6 +17,7 @@
 
 package com.sulacosoft.bitcoindconnector4j;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicLong;
@@ -43,6 +44,7 @@ import com.sulacosoft.bitcoindconnector4j.core.BitcoindException;
 import com.sulacosoft.bitcoindconnector4j.core.HttpException;
 import com.sulacosoft.bitcoindconnector4j.response.BaseResponse;
 import com.sulacosoft.bitcoindconnector4j.response.Error;
+import com.sulacosoft.bitcoindconnector4j.response.Fallback;
 
 /**
  *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
@@ -92,7 +94,21 @@ public class BitcoindApiHandler implements InvocationHandler {
 			if (error != null)
 				throw new BitcoindException(error.getMessage(), error.getCode());
 
-			return new Gson().fromJson(jsonObject.getResult(), method.getReturnType());
+			try {
+				return new Gson().fromJson(jsonObject.getResult(), method.getReturnType());
+			}
+			catch (RuntimeException e) {
+				Class<?> returnType = method.getReturnType();
+				for (Field f : returnType.getDeclaredFields()) {
+					if (f.isAnnotationPresent(Fallback.class)) {
+						Object obj = returnType.newInstance();
+						f.setAccessible(true);
+						f.set(obj, new Gson().fromJson(jsonObject.getResult(), f.getType()));
+						return obj;
+					}
+				}
+				throw e;
+			}
 		} finally {
 			response.close();
 		}
