@@ -29,6 +29,7 @@ import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAddress;
 import com.sulacosoft.bitcoindconnector4j.response.SinceBlock;
 import com.sulacosoft.bitcoindconnector4j.response.Transaction;
 import com.sulacosoft.bitcoindconnector4j.response.TransactionDetails;
+import com.sulacosoft.bitcoindconnector4j.response.TransactionOutput;
 
 /**
  * @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
@@ -68,6 +69,8 @@ public interface BitcoindApi {
 	String sendrawtransaction(String txhex);
 
 	String getrawtransaction(String txid);
+	
+	TransactionOutput gettxout(String txid, int n);
 	
 	RawTransaction getrawtransaction(String txid, boolean verbose);
 	
