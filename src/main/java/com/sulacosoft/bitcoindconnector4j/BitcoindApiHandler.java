@@ -48,6 +48,7 @@ import com.sulacosoft.bitcoindconnector4j.response.Fallback;
 
 /**
  *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
+ *  @author Nicola Atzei
  */
 public class BitcoindApiHandler implements InvocationHandler {
 

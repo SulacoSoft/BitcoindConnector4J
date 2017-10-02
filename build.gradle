@@ -18,6 +18,22 @@ jar {
 	}
 }
 
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+		attributes(
+			'Implementation-Title': project.name,
+			'Implementation-Version': version,
+            'Built-By': System.getProperty('user.name'),
+            'Built-Date': new Date(),
+            'Built-JDK': System.getProperty('java.version')
+    }
+    baseName = project.name + '-bundled'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
 dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'commons-io:commons-io:2.4'
