@@ -20,6 +20,7 @@ package com.sulacosoft.bitcoindconnector4j;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.io.IOUtils;
@@ -29,6 +30,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -37,9 +39,11 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
 import com.google.gson.Gson;
+import com.sulacosoft.bitcoindconnector4j.core.BitcoindConnector4JException;
 import com.sulacosoft.bitcoindconnector4j.core.BitcoindException;
 import com.sulacosoft.bitcoindconnector4j.core.HttpException;
 import com.sulacosoft.bitcoindconnector4j.response.BaseResponse;
@@ -60,10 +64,22 @@ public class BitcoindApiHandler implements InvocationHandler {
 	private HttpClientContext context;
 	private AtomicLong id = new AtomicLong(1L);
 
+	public void setTimeout(long value, TimeUnit unit) {
+		int timeout = (int) unit.toMillis(value);
+				
+		RequestConfig config = RequestConfig.custom()
+				.setConnectTimeout(timeout)
+				.setConnectionRequestTimeout(timeout)
+				.setSocketTimeout(timeout).build();
+		
+		httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+	}
+
 	public BitcoindApiHandler(String host, int port, String protocol, String uri, String username, String password) {
 		this.uri = uri;
 
 		httpClient = HttpClients.createDefault();
+
 		targetHost = new HttpHost(host, port, protocol);
 		CredentialsProvider credsProvider = new BasicCredentialsProvider();
 		credsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()),
@@ -85,8 +101,8 @@ public class BitcoindApiHandler implements InvocationHandler {
 
 		HttpPost httpPost = new HttpPost(uri);
 		httpPost.setEntity(new ByteArrayEntity(jsonRequest.getBytes(CHARACTER_ENCODING)));
-		CloseableHttpResponse response = httpClient.execute(targetHost, httpPost, context);
-		try {
+
+		try (CloseableHttpResponse response = httpClient.execute(targetHost, httpPost, context);) {
 			checkHttpErrors(response.getStatusLine().getStatusCode());
 			String jsonResponse = IOUtils.toString(response.getEntity().getContent(), CHARACTER_ENCODING);
 			BaseResponse jsonObject = new Gson().fromJson(jsonResponse, BaseResponse.class);
@@ -110,8 +126,9 @@ public class BitcoindApiHandler implements InvocationHandler {
 				}
 				throw e;
 			}
-		} finally {
-			response.close();
+		}
+		catch(Exception e) {
+			throw new BitcoindConnector4JException(e.getMessage(), -1);
 		}
 	}
 
