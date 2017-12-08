@@ -18,6 +18,7 @@
 package com.sulacosoft.bitcoindconnector4j;
 
 import java.lang.reflect.Proxy;
+import java.util.concurrent.TimeUnit;
 
 import com.sulacosoft.bitcoindconnector4j.core.BitcoindConnector4JException;
 
@@ -33,8 +34,14 @@ public class BitcoindApiFactory {
 
 	public static BitcoindApi createConnection(String host, int port, String protocol, String uri, String username,
 			String password) throws BitcoindConnector4JException {
+		return createConnection(host, port, protocol, uri, username, password, -1, TimeUnit.MILLISECONDS);
+	}
+	
+	public static BitcoindApi createConnection(String host, int port, String protocol, String uri, String username,
+			String password, int timeout, TimeUnit unit) throws BitcoindConnector4JException {
 		BitcoindApiHandler handler = new BitcoindApiHandler(host, port, protocol, uri, username, password);
-
+		handler.setTimeout(timeout, unit);
+		
 		BitcoindApi api = (BitcoindApi) Proxy.newProxyInstance(BitcoindApi.class.getClassLoader(),
 				new Class[] { BitcoindApi.class }, handler);
 
