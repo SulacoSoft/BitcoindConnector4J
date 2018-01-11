@@ -19,19 +19,20 @@ package com.sulacosoft.bitcoindconnector4j.core;
 
 /**
  *  @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
+ *  @author Nicola Atzei
  */
 public class BitcoindException extends Error {
 
 	private static final long serialVersionUID = 4505365298463956527L;
 
-	private int code;
+	private RPCErrorCode code;
 
-	public BitcoindException(String message, int code) {
+	public BitcoindException(String message, RPCErrorCode code) {
 		super(message);
 		this.code = code;
 	}
 
-	public int getCode() {
+	public RPCErrorCode getCode() {
 		return code;
 	}
 
