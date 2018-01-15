@@ -99,6 +99,7 @@ Currently connector implemented methods:
 ## Contributors
 
 Sebastian Dziak (sebastian.dziak@sulacosoft.com)
+Nicola Atzei (atzeinicola@gmail.com)
 
 ## License
 

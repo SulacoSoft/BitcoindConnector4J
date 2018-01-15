@@ -46,6 +46,7 @@ import com.google.gson.Gson;
 import com.sulacosoft.bitcoindconnector4j.core.BitcoindConnector4JException;
 import com.sulacosoft.bitcoindconnector4j.core.BitcoindException;
 import com.sulacosoft.bitcoindconnector4j.core.HttpException;
+import com.sulacosoft.bitcoindconnector4j.core.RPCErrorCode;
 import com.sulacosoft.bitcoindconnector4j.response.BaseResponse;
 import com.sulacosoft.bitcoindconnector4j.response.Error;
 import com.sulacosoft.bitcoindconnector4j.response.Fallback;
@@ -109,7 +110,7 @@ public class BitcoindApiHandler implements InvocationHandler {
 
 			Error error = jsonObject.getError();
 			if (error != null)
-				throw new BitcoindException(error.getMessage(), error.getCode());
+				throw new BitcoindException(error.getMessage(), RPCErrorCode.fromCode(error.getCode()));
 
 			try {
 				return new Gson().fromJson(jsonObject.getResult(), method.getReturnType());
