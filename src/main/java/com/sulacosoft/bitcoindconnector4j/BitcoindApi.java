@@ -22,7 +22,10 @@ import java.util.Map;
 
 import com.sulacosoft.bitcoindconnector4j.response.BitcoinAddress;
 import com.sulacosoft.bitcoindconnector4j.response.Block;
-import com.sulacosoft.bitcoindconnector4j.response.Info;
+import com.sulacosoft.bitcoindconnector4j.response.BlockchainInfo;
+import com.sulacosoft.bitcoindconnector4j.response.MemoryInfo;
+import com.sulacosoft.bitcoindconnector4j.response.MiningInfo;
+import com.sulacosoft.bitcoindconnector4j.response.NetworkInfo;
 import com.sulacosoft.bitcoindconnector4j.response.RawTransaction;
 import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAccount;
 import com.sulacosoft.bitcoindconnector4j.response.ReceivedByAddress;
@@ -30,6 +33,7 @@ import com.sulacosoft.bitcoindconnector4j.response.SinceBlock;
 import com.sulacosoft.bitcoindconnector4j.response.Transaction;
 import com.sulacosoft.bitcoindconnector4j.response.TransactionDetails;
 import com.sulacosoft.bitcoindconnector4j.response.TransactionOutput;
+import com.sulacosoft.bitcoindconnector4j.response.WalletInfo;
 
 /**
  * @author Sebastian Dziak {@literal (sebastian.dziak@sulacosoft.com)}
@@ -65,7 +69,15 @@ public interface BitcoindApi {
 
 	long gethashespersec();
 
-	Info getinfo();
+    BlockchainInfo getblockchaininfo();
+
+    NetworkInfo getnetworkinfo();
+
+    WalletInfo getwalletinfo();
+
+    MiningInfo getmininginfo();
+
+    MemoryInfo getmemoryinfo();
 
 	String sendrawtransaction(String txhex);
 

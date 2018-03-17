@@ -46,7 +46,7 @@ public class BitcoindApiFactory {
 				new Class[] { BitcoindApi.class }, handler);
 
 		// test connection to bitcoind
-		api.getinfo();
+		api.getblockchaininfo();
 
 		return api;
 	}

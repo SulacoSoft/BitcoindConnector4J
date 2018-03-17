@@ -160,5 +160,4 @@ public class BitcoindApiHandler implements InvocationHandler {
 						statusCode);
 		}
 	}
-
 }
