@@ -140,4 +140,7 @@ public interface BitcoindApi {
 
 	BitcoinAddress validateaddress(String address);
 
+	List<String> generate(int nBlocks);
+
+	List<String> generatetoaddress(int nBlocks, String address);
 }
