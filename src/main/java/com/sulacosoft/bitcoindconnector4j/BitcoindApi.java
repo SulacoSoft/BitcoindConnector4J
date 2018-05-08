@@ -43,6 +43,10 @@ public interface BitcoindApi {
 
 	int getblockcount();
 
+    String getblockhash(int height);
+
+    String getblockheader(String hash);
+
 	String getaccount(String bitcoinAddress);
 
 	String getaccountaddress(String account);
